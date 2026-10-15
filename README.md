@@ -1,0 +1,224 @@
+# Cassandra fault injection: LADC 2026 artifact
+
+Scripts and data for the paper:
+
+> C. F. Cavalcanti and G. R. A. Callou. **Empirical Dependability Measurement of
+> Apache Cassandra under Fault Injection: the Impact of Consistency Levels.**
+> LADC 2026 Student Forum (LADC-SF). Federal Rural University of Pernambuco (UFRPE).
+
+The paper measures how the consistency level (ONE, QUORUM, ALL) changes the
+behavior of a 5-node Apache Cassandra 4.1 cluster (RF = 3) under five injected
+faults: replica crash, coordinator crash, network delay, packet loss and network
+partition. The measures are error rate (availability), time to repair (MTTR) and
+throughput degradation (performability). The workload is YCSB.
+
+## Repository layout
+
+```
+scripts/
+  faults/        fault_inject.sh, run_bench.sh, run_all.sh, parser.py  (fault campaign harness, v2)
+  run/           baseline-phase harness (run_all.sh, run_bench.sh) and docker schema setup
+  gcp-config/    GCP VM creation / start / stop helpers and env file (placeholders)
+  extract/       parser.py used for the baseline phase
+  load/          analyze_fault.py, generate_graphs.py (exploratory analysis used at the time)
+  analysis/      paper_tables.py: recomputes Tables 2-4 (added for this artifact)
+  figs/          make_timeline.py, make_arch.py, make_panel.py, make_dilution.py
+  bootstrap-cluster.sh, run-experiment.sh   (early local docker-compose prototype)
+data/june2026/
+  processed/all_runs.csv      all 136 processed rows (135 paper runs + 1 smoke-test run, batch 99)
+  processed/paper_runs.csv    the 135 paper runs: phase == "fault" and batch == 1
+  processed/runs/*.csv        one processed row per run (as produced by parser.py)
+  raw/workload/*.log          YCSB run output (stdout + 10 s status lines), one per run
+  raw/load/*.log              YCSB load-phase output (SKIPPED except for the first run of each session)
+  raw/fault/*.json, *.fault.log   fault-injector timestamps and log, one per run
+  raw/meta/*.json             run parameters
+  raw/orchestrator/*.log      run_all.sh session logs (two sessions, 12-13 June 2026)
+supplementary/crash_mode_check/   later small check on crash modes (see below)
+```
+
+The scripts and file names are as used in June 2026; comments and log messages
+are in Portuguese.
+
+## Which data the paper uses
+
+All results in the paper come from **batch 1 of the fault phase**: 135 runs =
+5 faults x 3 consistency levels x 3 loads (10, 30, 50 YCSB threads) x 3
+repetitions, executed 12-13 June 2026. `paper_runs.csv` is exactly
+`all_runs.csv` filtered to `phase == "fault" and batch == 1`. The one extra row in
+`all_runs.csv` (`batch == 99`, `fault_ONE_t30_rep1_b99_...`) is a smoke test run
+before the campaign and is not used; its raw logs are not included.
+
+The raw directories contain one orphan attempt,
+`fault_ONE_t10_rep3_b1_20260612T170632` (load log and fault log only, no workload
+log, no processed row). The cell was run again and is complete in the processed
+data.
+
+Running `scripts/faults/parser.py` on `data/june2026/raw` regenerates the 135 rows
+of `paper_runs.csv` with identical values (checked when this artifact was built).
+The parser expects `<root>/data/raw/...`, so copy or symlink first:
+
+```bash
+mkdir -p /tmp/reparse/data && cp -r data/june2026/raw /tmp/reparse/data/raw
+python scripts/faults/parser.py --root /tmp/reparse --force
+```
+
+## Mapping paper tables and figures to files
+
+All error rates are computed per run as
+`100 * return_error / (return_ok + return_error)` (YCSB `Return=OK` / `Return=ERROR`
+totals over the whole 300 s run), then averaged over runs.
+
+| Paper item | Source | Filter / column |
+|---|---|---|
+| Table 1 (parameters) | `raw/meta/*.json`, `raw/fault/*.json` | fault params: delay 200 ms (jitter 50 ms), loss 25 %, window t = 60-150 s |
+| Table 2 (error rate per fault x CL) | `processed/paper_runs.csv` | `fault_type` in {node_crash, coord_crash, net_partition}; group by `fault_type, consistency`; n = 9 per cell |
+| Table 3 (MTTR) | `processed/paper_runs.csv` | column `mttr_repair_s` (fault removal to `nodetool status` showing 5/5 UN); group by `fault_type`; n = 27 |
+| Table 4 (throughput degradation) | `processed/paper_runs.csv` | column `degradation_pct`; `fault_type` in {net_delay, net_loss}; n = 9 per cell |
+| Fig. 1 (run timeline) | `scripts/figs/make_timeline.py` | schematic, no data |
+| Fig. 2 (architecture) | `scripts/figs/make_arch.py` | schematic, no data |
+| Fig. 3 (time series, 50 threads, median repetition) | `scripts/figs/make_panel.py` | reads `raw/workload/*.log` + `raw/fault/*.json` |
+| In-window error rate ~56.7 % under ALL (Sec. 5) | `scripts/figs/make_dilution.py` | 10 s YCSB intervals fully inside the fault window, CL = ALL; printed to stdout (the figure itself is not in the paper) |
+
+`python scripts/analysis/paper_tables.py` prints Tables 2-4. Output, matching the paper:
+
+| Table 2, error rate (%) | ONE | QUORUM | ALL |
+|---|---|---|---|
+| Replica crash (node_crash) | 0.00 ± 0.00 | 0.00 ± 0.00 | 24.29 ± 4.24 |
+| Coordinator crash (coord_crash) | 0.00 ± 0.00 | 0.00 ± 0.00 | 25.25 ± 1.45 |
+| Network partition (net_partition) | 0.05 ± 0.05 | 0.05 ± 0.10 | 19.01 ± 1.74 |
+
+(coord_crash/ONE has 1 error in 26,424,087 operations.)
+
+| Table 3, `mttr_repair_s` (s) | Mean ± SD | Min | Max |
+|---|---|---|---|
+| Replica crash | 15.19 ± 2.76 | 11 | 25 |
+| Coordinator crash | 19.15 ± 7.27 | 12 | 34 |
+| Network partition | 31.93 ± 7.90 | 23 | 47 |
+
+| Table 4, `degradation_pct` (%) | ONE | QUORUM | ALL |
+|---|---|---|---|
+| Network delay | 97.54 ± 0.45 | 97.60 ± 0.44 | 98.35 ± 0.61 |
+| Packet loss | 97.22 ± 0.53 | 96.70 ± 0.22 | 98.28 ± 0.28 |
+
+Other columns: `mttr_total_s` is fault injection to recovery confirmation (not
+used in the paper). `degradation_pct = 100 * (1 - thr_during_fault_ops /
+thr_pre_fault_ops)`, from YCSB 10 s throughput samples. One run
+(`fault_ALL_t50_rep3_b1_20260612T075634`, node_crash) has an empty `degradation_pct`;
+this does not affect Table 4.
+
+## Environment (June 2026)
+
+- Google Cloud Platform, zone `us-central1-a`, on-demand VMs, internal network.
+- Cassandra cluster: 5 x `e2-standard-2` (2 vCPU, 8 GB), Ubuntu 22.04,
+  Apache Cassandra 4.1 (default heap, about 2 GB), `num_tokens = 256`
+  (random tokens), Murmur3Partitioner, GossipingPropertyFileSnitch, 2 seeds
+  (node-1, node-2). Keyspace `ycsb`, `SimpleStrategy`, RF = 3.
+- Load client: 1 x `e2-medium` (2 vCPU, 4 GB) running YCSB 0.17.0
+  (`cassandra-cql` binding, DataStax driver 3.0.0), Workload A (50/50 read/update),
+  100,000 records, `operationcount = 8,000,000` so that `maxexecutiontime = 300` s
+  is the limit. The same CL is used for reads and writes.
+- Fault window: injected at t = 60 s, removed at t = 150 s (90 s), then recovery
+  polled with `nodetool status` (timeout 120 s). 90 s pause between runs, one
+  10,000-operation warm-up per cell.
+- Faults (`scripts/faults/fault_inject.sh`): `node_crash` = `systemctl stop
+  cassandra` on node-3; `coord_crash` = same on node-1 (YCSB contact point);
+  `net_delay` = `tc netem delay 200ms 50ms` on node-3 egress; `net_loss` = `tc netem
+  loss 25%` on node-3 egress; `net_partition` = `iptables` DROP between node-3 and
+  the other four nodes.
+- Internal IPs: nodes 10.128.0.2-10.128.0.6 (GCP default subnet range); these
+  appear in the scripts and raw logs and are not routable from outside.
+
+## How to run
+
+You need a GCP project with `gcloud` authenticated, five Cassandra VMs named
+`cassandra-node-1` .. `cassandra-node-5` and a YCSB client VM in the same zone.
+
+1. Edit `scripts/gcp-config/envs` (set `PROJECT`; the original project ID was
+   replaced by a placeholder), then `source scripts/gcp-config/envs` and run
+   `scripts/gcp-config/create-vms.sh`. Note: the file says `MACHINE="e2-medium"`;
+   the Cassandra nodes were later resized to `e2-standard-2`, which is the
+   configuration used for all paper data.
+2. Install Cassandra 4.1 on the nodes (not scripted in this repository), configure
+   the cluster as above, start it with `scripts/gcp-config/start-gcp.sh`, and create
+   the schema with `scripts/gcp-config/setup-schema-gcp.sh`.
+3. On the client VM, with YCSB 0.17.0 in `$HOME/ycsb-0.17.0` and `fault_inject.sh`
+   in `<BENCH_ROOT>/scripts/`:
+   ```bash
+   HOSTS=10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6 \
+     ./run_all.sh --phase fault --reps 3 --batch 1 --fault-start 60 --fault-dur 90
+   python parser.py --root <BENCH_ROOT>
+   ```
+4. Tables and figures (Python 3 with pandas, numpy, matplotlib; see
+   `requirements.txt`):
+   ```bash
+   python scripts/analysis/paper_tables.py
+   python scripts/figs/make_panel.py --lang en --out panel_3faults_en.pdf
+   python scripts/figs/make_timeline.py --lang en --out fig_timeline_en.pdf
+   python scripts/figs/make_arch.py --lang en --out arch_en.pdf
+   python scripts/figs/make_dilution.py --lang en --out fig_dilution_en.pdf
+   ```
+   The figure scripts read `data/june2026/` by default.
+
+## Known limitations
+
+- The exact Cassandra 4.1.x patch release, the `cluster_name` and some
+  `cassandra.yaml` settings of the June cluster were not recorded. Version 4.1,
+  `num_tokens = 256` and the default heap are confirmed.
+- No script installs and configures Cassandra on the June VMs; that was done
+  by hand.
+- `fault_inject.sh` ran on the client VM and used `gcloud compute ssh`, which takes
+  about 5 s per call. Injection and removal timestamps are taken after the ssh
+  call returns (1 s resolution, `date +%s`). The recovery poll (ssh + 5 s sleep,
+  two ssh calls per poll for the partition) gives the control-plane MTTR a
+  resolution of roughly 10 s. MTTR here is the control-plane time until
+  `nodetool status` shows 5/5 UN. It is not the time until clients see service
+  again.
+- `systemctl stop` is a graceful shutdown: the node announces it is leaving through
+  gossip. Abrupt crashes behave differently (see the supplementary check).
+- Client CPU was not monitored.
+- `parser.py` says in its docstring that YCSB logs have no per-interval error
+  counts. That is wrong: the 10 s status lines include `READ-FAILED` /
+  `UPDATE-FAILED` counts, which `make_panel.py` and `make_dilution.py` use.
+
+## Supplementary: crash-mode check (`supplementary/crash_mode_check/`)
+
+A small check from a later campaign (block B8, batch `c2b8`, 25 September 2026). It
+is **not** part of the paper's data. It compares three ways of crashing the
+replica node-3: `node_crash` (`systemctl stop`, graceful, as in the paper),
+`node_kill` (SIGKILL on the Cassandra process) and `node_silent` (emulated host
+crash: silent DROP of all Cassandra traffic plus SIGKILL). 36 runs = 3 modes x 3
+CLs x 4 repetitions, 30 threads, zipfian request distribution, 90 s fault at t = 60
+s. The cluster was re-provisioned (5 x e2-standard-2, Cassandra 4.1.12, client
+e2-standard-4, plain ssh over the internal network, ms timestamps). Its tokens are
+new and random, so node names do not refer to the same token ranges as in June.
+
+- `b8_runs.csv`: the 36 processed rows (`batch == "c2b8"`) of that campaign.
+- `gossip.csv`: per run, when the peers marked the target DOWN / UP (s after
+  injection / removal). Peers mark the node DOWN after 0.27 ± 0.05 s with
+  `node_crash`, against 20.17 ± 0.69 s (`node_kill`) and 20.05 ± 0.87 s
+  (`node_silent`), which is the failure-detector delay.
+- `tables_fault_cl.csv`: summary per fault x CL of latency-SLO measures (detection,
+  recovery, downtime, availability) for several latency thresholds `L_ms` and
+  tolerances `delta`.
+- `fault_inject_v3.sh`: the injector used for this block (adds `node_kill` and
+  `node_silent`). It reads node names and IPs from a `cluster.env` file, which is
+  not included.
+
+The raw logs of that campaign (about 3 GB) are not included.
+
+## License
+
+Code (everything under `scripts/` and `supplementary/**/*.sh`): MIT, see `LICENSE`.
+Data (everything under `data/` and the CSV files under `supplementary/`): Creative
+Commons Attribution 4.0 International (CC BY 4.0).
+
+## Sanitization
+
+Before publication, the GCP project ID in `scripts/gcp-config/envs` was replaced by
+`<your-gcp-project>`, and the client VM's home path in the raw logs was replaced by
+`/home/<user>` (in YCSB command lines and orchestrator paths). Nothing else in the
+data was changed.
+
+## Citation
+
+See `CITATION.cff`. Contact: caio.farias@ufrpe.br, gustavo.callou@ufrpe.br.

@@ -1,0 +1,22 @@
+{
+  "run_id": "fault_ALL_t10_rep1_b1_20260612T125742",
+  "timestamp_utc": "20260612T125742",
+  "phase": "fault",
+  "batch": "1",
+  "consistency": "ALL",
+  "threads": 10,
+  "rep": 1,
+  "records": 100000,
+  "operations": 8000000,
+  "workload": "workloada",
+  "rf": 3,
+  "fault_type": "net_delay",
+  "fault_start_offset_s": 60,
+  "fault_duration_s": 90,
+  "maxexecutiontime_s": 300,
+  "cluster_nodes": 5,
+  "cassandra_version": "4.1",
+  "env": "gcp",
+  "hosts": "10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6",
+  "notes": null
+}

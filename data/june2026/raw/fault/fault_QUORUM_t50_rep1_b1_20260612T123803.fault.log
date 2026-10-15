@@ -1,0 +1,10 @@
+[12:38:03] fault=net_delay target=cassandra-node-3 offset=60s duration=90s
+[12:38:03] pre-cleanup: removendo qualquer estado residual no alvo
+[12:38:10] estabilização: aguardando 60s
+[12:39:10] injetando falha
+[12:39:16] falha ativa por 90s
+[12:40:46] removendo falha
+[12:40:56] confirmando recovery (timeout 120s)
+[12:41:09] recovery poll (cassandra-node-1): 5/5 UN
+[12:41:09] recovery confirmado em 18s
+[12:41:09] resultado gravado em /home/<user>/data/raw/fault/fault_QUORUM_t50_rep1_b1_20260612T123803.json

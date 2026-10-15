@@ -1,0 +1,113 @@
+/usr/bin/java  -classpath /home/<user>/ycsb-0.17.0/conf:/home/<user>/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/<user>/ycsb-0.17.0/lib/core-0.17.0.jar:/home/<user>/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/<user>/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/<user>/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/cassandra-binding-0.17.0.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/cassandra-driver-core-3.0.0.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/guava-16.0.1.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/metrics-core-3.1.2.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-buffer-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-codec-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-common-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-handler-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-transport-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/slf4j-api-1.7.25.jar site.ycsb.Client -t -db site.ycsb.db.CassandraCQLClient -P /home/<user>/ycsb-0.17.0/workloads/workloada -p recordcount=100000 -p operationcount=8000000 -p hosts=10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6 -p maxexecutiontime=300 -p cassandra.readconsistencylevel=QUORUM -p cassandra.writeconsistencylevel=QUORUM -threads 30 -s
+Command line: -t -db site.ycsb.db.CassandraCQLClient -P /home/<user>/ycsb-0.17.0/workloads/workloada -p recordcount=100000 -p operationcount=8000000 -p hosts=10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6 -p maxexecutiontime=300 -p cassandra.readconsistencylevel=QUORUM -p cassandra.writeconsistencylevel=QUORUM -threads 30 -s
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Maximum execution time specified as: 300 secs
+2026-06-12 12:18:25:821 0 sec: 0 operations; est completion in 0 second 
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by io.netty.util.internal.PlatformDependent0 (file:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-common-4.0.33.Final.jar) to field java.nio.Buffer.address
+WARNING: Please consider reporting this to the maintainers of io.netty.util.internal.PlatformDependent0
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Jun 12, 2026 12:18:26 PM io.netty.util.internal.PlatformDependent <clinit>
+INFO: Your platform does not provide complete low-level API for accessing direct buffers reliably. Unless explicitly requested, heap buffer will always be preferred to avoid potential system unstability.
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-06-12 12:18:35:663 10 sec: 0 operations; est completion in 106751991167300 days 15 hours 
+2026-06-12 12:18:45:663 20 sec: 0 operations; est completion in 106751991167300 days 15 hours 
+2026-06-12 12:18:55:663 30 sec: 16457 operations; 1645.54 current ops/sec; est completion in 4 hours 2 minutes [READ: Count=8222, Max=24395775, Min=1176, Avg=45090.08, 90=12327, 99=31311, 99.9=24330239, 99.99=24379391] [UPDATE: Count=8606, Max=24412159, Min=1072, Avg=54133.09, 90=11327, 99=30607, 99.9=24346623, 99.99=24412159] 
+2026-06-12 12:19:05:666 40 sec: 101915 operations; 8544.09 current ops/sec; est completion in 51 minutes [READ: Count=42858, Max=59615, Min=1051, Avg=3753.78, 90=5271, 99=11039, 99.9=35551, 99.99=54623] [UPDATE: Count=42371, Max=56543, Min=825, Avg=3233.84, 90=4583, 99=9623, 99.9=36575, 99.99=53791] 
+2026-06-12 12:19:15:663 50 sec: 198439 operations; 9655.3 current ops/sec; est completion in 32 minutes [READ: Count=48307, Max=46463, Min=983, Avg=3392.33, 90=4727, 99=10479, 99.9=31247, 99.99=42623] [UPDATE: Count=48103, Max=49503, Min=797, Avg=2799.68, 90=3951, 99=8719, 99.9=30543, 99.99=42463] 
+2026-06-12 12:19:25:663 60 sec: 304858 operations; 10641.9 current ops/sec; est completion in 25 minutes [READ: Count=53295, Max=53887, Min=1036, Avg=3171.12, 90=4447, 99=8959, 99.9=34271, 99.99=46719] [UPDATE: Count=53162, Max=48703, Min=786, Avg=2462.46, 90=3441, 99=7303, 99.9=30895, 99.99=43551] 
+2026-06-12 12:19:35:663 70 sec: 387490 operations; 8263.2 current ops/sec; est completion in 22 minutes [READ: Count=41419, Max=1218559, Min=1020, Avg=3963.38, 90=4727, 99=11359, 99.9=70911, 99.99=1008127] [UPDATE: Count=41147, Max=1131519, Min=772, Avg=3023.64, 90=3715, 99=9383, 99.9=47135, 99.99=1024511] 
+2026-06-12 12:19:45:663 80 sec: 390602 operations; 311.2 current ops/sec; est completion in 25 minutes [READ: Count=1580, Max=1017343, Min=1039, Avg=94720.99, 90=499199, 99=761855, 99.9=872447, 99.99=1017343] [UPDATE: Count=1532, Max=839679, Min=906, Avg=99812.97, 90=485119, 99=670207, 99.9=791039, 99.99=839679] 
+2026-06-12 12:19:55:663 90 sec: 392996 operations; 239.4 current ops/sec; est completion in 29 minutes [READ: Count=1217, Max=1467391, Min=1061, Avg=146853.54, 90=641023, 99=1188863, 99.9=1306623, 99.99=1467391] [UPDATE: Count=1177, Max=1232895, Min=804, Avg=100194.85, 90=489983, 99=997887, 99.9=1179647, 99.99=1232895] 
+2026-06-12 12:20:05:663 100 sec: 395639 operations; 264.3 current ops/sec; est completion in 32 minutes [READ: Count=1282, Max=1337343, Min=1012, Avg=126728.9, 90=612351, 99=1005567, 99.9=1277951, 99.99=1337343] [UPDATE: Count=1363, Max=1030143, Min=841, Avg=105371.5, 90=518911, 99=876031, 99.9=1007615, 99.99=1030143] 
+2026-06-12 12:20:15:663 110 sec: 398239 operations; 260 current ops/sec; est completion in 35 minutes [READ: Count=1289, Max=1387519, Min=1008, Avg=116329.05, 90=573439, 99=1016319, 99.9=1263615, 99.99=1387519] [UPDATE: Count=1309, Max=1254399, Min=806, Avg=109497.33, 90=538111, 99=911871, 99.9=1200127, 99.99=1254399] 
+2026-06-12 12:20:25:663 120 sec: 401113 operations; 287.4 current ops/sec; est completion in 37 minutes [READ: Count=1424, Max=1293311, Min=949, Avg=115584.54, 90=563711, 99=903167, 99.9=1080319, 99.99=1293311] [UPDATE: Count=1450, Max=1014783, Min=845, Avg=97224.15, 90=484095, 99=734719, 99.9=998911, 99.99=1014783] 
+2026-06-12 12:20:35:663 130 sec: 403512 operations; 239.9 current ops/sec; est completion in 40 minutes [READ: Count=1191, Max=1079295, Min=941, Avg=127857.55, 90=610815, 99=846335, 99.9=963583, 99.99=1079295] [UPDATE: Count=1208, Max=824831, Min=828, Avg=115008.9, 90=545791, 99=774655, 99.9=814591, 99.99=824831] 
+2026-06-12 12:20:45:663 140 sec: 406217 operations; 270.5 current ops/sec; est completion in 43 minutes [READ: Count=1366, Max=1440767, Min=1033, Avg=123133.26, 90=581119, 99=1144831, 99.9=1416191, 99.99=1440767] [UPDATE: Count=1339, Max=1244159, Min=876, Avg=101247.31, 90=501503, 99=958463, 99.9=1226751, 99.99=1244159] 
+2026-06-12 12:20:55:663 150 sec: 408416 operations; 219.9 current ops/sec; est completion in 46 minutes [READ: Count=1120, Max=1346559, Min=1034, Avg=141308.23, 90=680447, 99=1178623, 99.9=1330175, 99.99=1346559] [UPDATE: Count=1079, Max=1345535, Min=894, Avg=130355.31, 90=611327, 99=1079295, 99.9=1240063, 99.99=1345535] 
+2026-06-12 12:21:05:663 160 sec: 411195 operations; 277.9 current ops/sec; est completion in 49 minutes [READ: Count=1365, Max=1255423, Min=920, Avg=107987.11, 90=560639, 99=889855, 99.9=1206271, 99.99=1255423] [UPDATE: Count=1414, Max=970239, Min=825, Avg=110066.18, 90=491519, 99=823807, 99.9=944639, 99.99=970239] 
+2026-06-12 12:21:15:664 170 sec: 471540 operations; 6033.29 current ops/sec; est completion in 45 minutes [READ: Count=30092, Max=999935, Min=915, Avg=5685.06, 90=4767, 99=18703, 99.9=719871, 99.99=949247] [UPDATE: Count=30301, Max=778239, Min=775, Avg=4570.17, 90=3867, 99=14479, 99.9=600063, 99.99=756735] 
+2026-06-12 12:21:25:663 180 sec: 563888 operations; 9236.65 current ops/sec; est completion in 39 minutes [READ: Count=46212, Max=95807, Min=891, Avg=3593.58, 90=5967, 99=15663, 99.9=37343, 99.99=86399] [UPDATE: Count=46127, Max=93503, Min=757, Avg=2892.45, 90=4743, 99=14047, 99.9=33887, 99.99=89535] 
+2026-06-12 12:21:35:663 190 sec: 668498 operations; 10461 current ops/sec; est completion in 34 minutes [READ: Count=52168, Max=47935, Min=947, Avg=3206.53, 90=4871, 99=12063, 99.9=36191, 99.99=41631] [UPDATE: Count=52440, Max=40287, Min=812, Avg=2524.95, 90=3731, 99=10103, 99.9=31407, 99.99=38239] 
+2026-06-12 12:21:45:663 200 sec: 778963 operations; 11045.4 current ops/sec; est completion in 30 minutes [READ: Count=55520, Max=44191, Min=937, Avg=3050.14, 90=4475, 99=9271, 99.9=33535, 99.99=41087] [UPDATE: Count=54940, Max=44191, Min=812, Avg=2371.3, 90=3427, 99=6479, 99.9=30863, 99.99=38975] 
+2026-06-12 12:21:55:664 210 sec: 888404 operations; 10944.1 current ops/sec; est completion in 28 minutes [READ: Count=54571, Max=47647, Min=864, Avg=3075.53, 90=4503, 99=10215, 99.9=34047, 99.99=44479] [UPDATE: Count=54888, Max=47071, Min=757, Avg=2401.19, 90=3465, 99=7559, 99.9=31391, 99.99=41663] 
+2026-06-12 12:22:05:664 220 sec: 999293 operations; 11090.01 current ops/sec; est completion in 25 minutes [READ: Count=55414, Max=48479, Min=820, Avg=3025.44, 90=4455, 99=9247, 99.9=34239, 99.99=42367] [UPDATE: Count=55449, Max=48927, Min=717, Avg=2378.44, 90=3435, 99=6855, 99.9=32159, 99.99=39519] 
+2026-06-12 12:22:15:664 230 sec: 1109100 operations; 10980.7 current ops/sec; est completion in 23 minutes [READ: Count=54946, Max=46015, Min=934, Avg=3072.18, 90=4543, 99=9751, 99.9=36671, 99.99=43263] [UPDATE: Count=54869, Max=43807, Min=773, Avg=2384.94, 90=3481, 99=7267, 99.9=34239, 99.99=41183] 
+2026-06-12 12:22:25:663 240 sec: 1219472 operations; 11037.2 current ops/sec; est completion in 22 minutes [READ: Count=55154, Max=49407, Min=885, Avg=3040.71, 90=4491, 99=9167, 99.9=31647, 99.99=38943] [UPDATE: Count=55227, Max=39359, Min=803, Avg=2388.63, 90=3475, 99=6807, 99.9=28751, 99.99=37055] 
+2026-06-12 12:22:35:663 250 sec: 1328115 operations; 10864.3 current ops/sec; est completion in 20 minutes [READ: Count=54455, Max=68671, Min=950, Avg=3088.91, 90=4495, 99=9943, 99.9=35295, 99.99=65535] [UPDATE: Count=54197, Max=75455, Min=794, Avg=2425.33, 90=3487, 99=7035, 99.9=33663, 99.99=68223] 
+2026-06-12 12:22:45:663 260 sec: 1434035 operations; 10590.94 current ops/sec; est completion in 19 minutes [READ: Count=52945, Max=165247, Min=918, Avg=3166.54, 90=4823, 99=9679, 99.9=38015, 99.99=156287] [UPDATE: Count=52984, Max=163071, Min=807, Avg=2491.85, 90=3729, 99=7511, 99.9=37183, 99.99=154751] 
+2026-06-12 12:22:55:664 270 sec: 1538563 operations; 10452.8 current ops/sec; est completion in 18 minutes [READ: Count=52143, Max=49503, Min=868, Avg=3222.35, 90=5095, 99=10535, 99.9=32799, 99.99=43935] [UPDATE: Count=52362, Max=49279, Min=729, Avg=2512.8, 90=3851, 99=8295, 99.9=35455, 99.99=44511] 
+2026-06-12 12:23:05:664 280 sec: 1647284 operations; 10872.1 current ops/sec; est completion in 18 minutes [READ: Count=54546, Max=54847, Min=946, Avg=3090.6, 90=4535, 99=9983, 99.9=36351, 99.99=51103] [UPDATE: Count=54187, Max=52671, Min=779, Avg=2418.92, 90=3465, 99=7407, 99.9=36383, 99.99=47263] 
+2026-06-12 12:23:15:663 290 sec: 1752672 operations; 10539.85 current ops/sec; est completion in 17 minutes [READ: Count=52709, Max=52991, Min=823, Avg=3222.33, 90=5083, 99=10815, 99.9=37343, 99.99=46399] [UPDATE: Count=52673, Max=46399, Min=759, Avg=2464.51, 90=3759, 99=8207, 99.9=35903, 99.99=43263] 
+2026-06-12 12:23:25:663 300 sec: 1860252 operations; 10758 current ops/sec; est completion in 16 minutes [READ: Count=53950, Max=52639, Min=891, Avg=3138.86, 90=4683, 99=10007, 99.9=37823, 99.99=46719] [UPDATE: Count=53591, Max=46751, Min=757, Avg=2425.56, 90=3519, 99=7171, 99.9=37215, 99.99=42143] 
+Maximum time elapsed. Requesting stop for the workload.
+Stop requested for workload. Now Joining!
+Still waiting for thread Thread-6 to complete. Workload status: true
+2026-06-12 12:23:27:954 302 sec: 1860667 operations; 181.06 current ops/sec; est completion in 16 minutes [READ: Count=201, Max=43551, Min=1255, Avg=5873.05, 90=7703, 99=43295, 99.9=43551, 99.99=43551] [CLEANUP: Count=30, Max=2228223, Min=0, Avg=74241.93, 90=2, 99=2228223, 99.9=2228223, 99.99=2228223] [UPDATE: Count=211, Max=43199, Min=882, Avg=4197.64, 90=4331, 99=41983, 99.9=43199, 99.99=43199] 
+[OVERALL], RunTime(ms), 302290
+[OVERALL], Throughput(ops/sec), 6155.238347282411
+[TOTAL_GCS_G1_Young_Generation], Count, 344
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 1476
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.48827285057395214
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 344
+[TOTAL_GC_TIME], Time(ms), 1476
+[TOTAL_GC_TIME_%], Time(%), 0.48827285057395214
+[READ], Operations, 930961
+[READ], AverageLatency(us), 5176.126273818129
+[READ], MinLatency(us), 820
+[READ], MaxLatency(us), 24395775
+[READ], 95thPercentileLatency(us), 5991
+[READ], 99thPercentileLatency(us), 13495
+[READ], Return=OK, 930961
+[CLEANUP], Operations, 30
+[CLEANUP], AverageLatency(us), 74241.93333333333
+[CLEANUP], MinLatency(us), 0
+[CLEANUP], MaxLatency(us), 2228223
+[CLEANUP], 95thPercentileLatency(us), 31
+[CLEANUP], 99thPercentileLatency(us), 2228223
+[UPDATE], Operations, 929706
+[UPDATE], AverageLatency(us), 4421.07375880117
+[UPDATE], MinLatency(us), 717
+[UPDATE], MaxLatency(us), 24412159
+[UPDATE], 95thPercentileLatency(us), 4655
+[UPDATE], 99thPercentileLatency(us), 11055
+[UPDATE], Return=OK, 929706

@@ -1,0 +1,20 @@
+{
+  "fault_type": "node_crash",
+  "target_node": "cassandra-node-3",
+  "zone": "us-central1-a",
+  "start_offset_s_planned": 60,
+  "duration_s_planned": 90,
+  "fault_params": {
+    "delay_ms": 200,
+    "jitter_ms": 50,
+    "loss_pct": 25
+  },
+  "t_script_start_epoch": 1781241176,
+  "t_fault_injected_epoch": 1781241249,
+  "t_fault_removed_epoch": 1781241348,
+  "t_recovery_confirmed_epoch": 1781241367,
+  "recovery_confirmed": true,
+  "clean_confirmed": true,
+  "inject_rc": 0,
+  "remove_rc": 0
+}

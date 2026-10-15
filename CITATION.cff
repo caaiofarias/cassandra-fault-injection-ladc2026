@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use these scripts or data, please cite the paper."
+title: "Fault-injection scripts and data for \"Empirical Dependability Measurement of Apache Cassandra under Fault Injection: the Impact of Consistency Levels\""
+type: software
+authors:
+  - family-names: Cavalcanti
+    given-names: Caio Farias
+    affiliation: "Federal Rural University of Pernambuco (UFRPE)"
+    email: caio.farias@ufrpe.br
+  - family-names: Callou
+    given-names: Gustavo Rau de Almeida
+    affiliation: "Federal Rural University of Pernambuco (UFRPE)"
+    email: gustavo.callou@ufrpe.br
+year: 2026
+license: MIT
+keywords: [Apache Cassandra, fault injection, dependability, consistency levels, YCSB]
+preferred-citation:
+  type: conference-paper
+  title: "Empirical Dependability Measurement of Apache Cassandra under Fault Injection: the Impact of Consistency Levels"
+  authors:
+    - family-names: Cavalcanti
+      given-names: Caio Farias
+    - family-names: Callou
+      given-names: Gustavo Rau de Almeida
+  collection-title: "Latin-American Symposium on Dependable and Secure Computing (LADC 2026), Student Forum"
+  year: 2026

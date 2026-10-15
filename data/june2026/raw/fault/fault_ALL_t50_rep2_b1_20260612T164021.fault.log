@@ -1,0 +1,10 @@
+[16:40:21] fault=net_loss target=cassandra-node-3 offset=60s duration=90s
+[16:40:21] pre-cleanup: removendo qualquer estado residual no alvo
+[16:40:27] estabilização: aguardando 60s
+[16:41:27] injetando falha
+[16:41:32] falha ativa por 90s
+[16:43:02] removendo falha
+[16:43:15] confirmando recovery (timeout 120s)
+[16:43:29] recovery poll (cassandra-node-1): 5/5 UN
+[16:43:29] recovery confirmado em 18s
+[16:43:29] resultado gravado em /home/<user>/data/raw/fault/fault_ALL_t50_rep2_b1_20260612T164021.json

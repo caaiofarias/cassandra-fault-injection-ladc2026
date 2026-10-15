@@ -1,0 +1,5 @@
+export PROJECT="<your-gcp-project>"   # placeholder: the original GCP project ID was removed
+export ZONE="us-central1-a"
+export MACHINE="e2-medium"      # 2 vCPU, 4GB RAM — suficiente pra Cassandra
+export IMAGE="ubuntu-2204-jammy-v20240519"
+export IMAGE_PROJECT="ubuntu-os-cloud"

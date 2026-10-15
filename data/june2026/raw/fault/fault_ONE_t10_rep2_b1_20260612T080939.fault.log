@@ -1,0 +1,10 @@
+[08:09:39] fault=coord_crash target=cassandra-node-1 offset=60s duration=90s
+[08:09:39] pre-cleanup: removendo qualquer estado residual no alvo
+[08:09:39] estabilização: aguardando 60s
+[08:10:39] injetando falha
+[08:10:51] falha ativa por 90s
+[08:12:21] removendo falha
+[08:12:31] confirmando recovery (timeout 120s)
+[08:12:47] recovery poll (cassandra-node-2): 5/5 UN
+[08:12:47] recovery confirmado em 16s
+[08:12:47] resultado gravado em /home/<user>/data/raw/fault/fault_ONE_t10_rep2_b1_20260612T080939.json

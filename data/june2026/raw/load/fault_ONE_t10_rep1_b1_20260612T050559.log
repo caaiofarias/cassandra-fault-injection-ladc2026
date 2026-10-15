@@ -1,0 +1,56 @@
+/usr/bin/java  -classpath /home/<user>/ycsb-0.17.0/conf:/home/<user>/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/<user>/ycsb-0.17.0/lib/core-0.17.0.jar:/home/<user>/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/<user>/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/<user>/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/cassandra-binding-0.17.0.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/cassandra-driver-core-3.0.0.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/guava-16.0.1.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/metrics-core-3.1.2.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-buffer-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-codec-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-common-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-handler-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-transport-4.0.33.Final.jar:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/slf4j-api-1.7.25.jar site.ycsb.Client -load -db site.ycsb.db.CassandraCQLClient -P /home/<user>/ycsb-0.17.0/workloads/workloada -p recordcount=100000 -p operationcount=8000000 -p hosts=10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6 -p maxexecutiontime=300 -p cassandra.writeconsistencylevel=ONE -threads 10 -s
+Command line: -load -db site.ycsb.db.CassandraCQLClient -P /home/<user>/ycsb-0.17.0/workloads/workloada -p recordcount=100000 -p operationcount=8000000 -p hosts=10.128.0.2,10.128.0.3,10.128.0.4,10.128.0.5,10.128.0.6 -p maxexecutiontime=300 -p cassandra.writeconsistencylevel=ONE -threads 10 -s
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Maximum execution time specified as: 300 secs
+2026-06-12 05:06:01:973 0 sec: 0 operations; est completion in 0 second 
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by io.netty.util.internal.PlatformDependent0 (file:/home/<user>/ycsb-0.17.0/cassandra-binding/lib/netty-common-4.0.33.Final.jar) to field java.nio.Buffer.address
+WARNING: Please consider reporting this to the maintainers of io.netty.util.internal.PlatformDependent0
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Jun 12, 2026 5:06:02 AM io.netty.util.internal.PlatformDependent <clinit>
+INFO: Your platform does not provide complete low-level API for accessing direct buffers reliably. Unless explicitly requested, heap buffer will always be preferred to avoid potential system unstability.
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-06-12 05:06:11:843 10 sec: 29487 operations; 2947.82 current ops/sec; est completion in 24 seconds [INSERT: Count=29670, Max=119935, Min=473, Avg=2310.98, 90=3833, 99=11247, 99.9=44543, 99.99=117375] 
+2026-06-12 05:06:21:840 20 sec: 99993 operations; 7052.72 current ops/sec; est completion in 1 second [CLEANUP: Count=9, Max=17, Min=2, Avg=6.56, 90=7, 99=17, 99.9=17, 99.99=17] [INSERT: Count=70325, Max=92991, Min=340, Avg=1402.36, 90=1927, 99=4351, 99.9=69631, 99.99=88511] 
+Could not wait until max specified time, TerminatorThread interrupted.
+2026-06-12 05:06:24:088 22 sec: 100000 operations; 3.11 current ops/sec; [CLEANUP: Count=1, Max=2232319, Min=2230272, Avg=2231296, 90=2232319, 99=2232319, 99.9=2232319, 99.99=2232319] [INSERT: Count=5, Max=6071, Min=991, Avg=2942, 90=6071, 99=6071, 99.9=6071, 99.99=6071] 
+[OVERALL], RunTime(ms), 22248
+[OVERALL], Throughput(ops/sec), 4494.786048184106
+[TOTAL_GCS_G1_Young_Generation], Count, 50
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 264
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 1.186623516720604
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 50
+[TOTAL_GC_TIME], Time(ms), 264
+[TOTAL_GC_TIME_%], Time(%), 1.186623516720604
+[CLEANUP], Operations, 10
+[CLEANUP], AverageLatency(us), 223135.5
+[CLEANUP], MinLatency(us), 2
+[CLEANUP], MaxLatency(us), 2232319
+[CLEANUP], 95thPercentileLatency(us), 2232319
+[CLEANUP], 99thPercentileLatency(us), 2232319
+[INSERT], Operations, 100000
+[INSERT], AverageLatency(us), 1672.02231
+[INSERT], MinLatency(us), 340
+[INSERT], MaxLatency(us), 119935
+[INSERT], 95thPercentileLatency(us), 3377
+[INSERT], 99thPercentileLatency(us), 7723
+[INSERT], Return=OK, 100000
