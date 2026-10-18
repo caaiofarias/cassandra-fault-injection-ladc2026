@@ -50,21 +50,21 @@ MK = {"ONE": "o", "QUORUM": "s", "ALL": "^"}
 
 LABELS = {
     "pt": {
-        "crash": "Crash de réplica (taxa de erro)",
-        "part": "Partição de rede (taxa de erro)",
-        "delay": "Atraso de rede (vazão)",
+        "crash": "Crash de réplica",
+        "part": "Partição de rede",
+        "delay": "Atraso de rede",
         "err": "Taxa de erro (%)",
         "thr": "Vazão (ops/s)",
-        "x": "Tempo relativo à injeção da falta (s)",
+        "x": "Tempo desde a injeção (s)",
         "sup": "Séries temporais de dependabilidade a {t} threads (repetição mediana)",
     },
     "en": {
-        "crash": "Replica crash (error rate)",
-        "part": "Network partition (error rate)",
-        "delay": "Network delay (throughput)",
+        "crash": "Replica crash",
+        "part": "Network partition",
+        "delay": "Network delay",
         "err": "Error rate (%)",
         "thr": "Throughput (ops/s)",
-        "x": "Time relative to fault injection (s)",
+        "x": "Time since injection (s)",
         "sup": "Dependability time series at {t} threads (median repetition)",
     },
 }
@@ -156,7 +156,8 @@ def main() -> int:
         ("net_partition", L["part"], True),
         ("net_delay", L["delay"], False),
     ]
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+    plt.rcParams.update({"font.size": 10.5, "axes.labelsize": 10.5, "xtick.labelsize": 9.5, "ytick.labelsize": 9.5})
+    fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.75))
     for ax, (ft, title, use_err) in zip(axes, panels):
         rem_rel = []
         for cons in CONS_ORDER:
@@ -168,7 +169,7 @@ def main() -> int:
             tr = fault["t_fault_removed_epoch"]
             xs = [t - ti for (t, c, e) in ts]
             ys = [(e if use_err else c) for (t, c, e) in ts]
-            ax.plot(xs, ys, marker=MK[cons], ms=3.5, color=COL[cons], label=cons, lw=1.4)
+            ax.plot(xs, ys, marker=MK[cons], ms=3, color=COL[cons], label=cons, lw=1.3)
             rem_rel.append(tr - ti)
         rem = np.median(rem_rel) if rem_rel else 90
         ax.axvspan(0, rem, alpha=0.12, color="red")
@@ -177,10 +178,12 @@ def main() -> int:
         ax.set_xlabel(L["x"])
         ax.set_ylabel(L["err"] if use_err else L["thr"])
         ax.set_ylim(-2, 105) if use_err else ax.set_ylim(bottom=0)
-        ax.set_title(title, fontsize=11)
+        ax.set_title(title, fontsize=10.5)
         ax.grid(True, alpha=0.3)
-        ax.legend(loc="best", framealpha=0.9, fontsize=9, title="CL")
-    fig.suptitle(L["sup"].format(t=thr), fontsize=12, y=1.02)
+    # legenda única acima dos painéis; o título geral fica na legenda da figura no LaTeX
+    h, lab = axes[0].get_legend_handles_labels()
+    fig.legend(h, lab, loc="upper center", ncol=3, frameon=False, fontsize=10,
+               bbox_to_anchor=(0.5, 1.07))
     fig.tight_layout()
     out = Path(args.out)
     fig.savefig(out, bbox_inches="tight")

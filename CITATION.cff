@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use these scripts or data, please cite the paper."
 title: "Fault-injection scripts and data for \"Empirical Dependability Measurement of Apache Cassandra under Fault Injection: the Impact of Consistency Levels\""
 type: software
+repository-code: "https://github.com/caaiofarias/cassandra-fault-injection-ladc2026"
 authors:
   - family-names: Cavalcanti
     given-names: Caio Farias

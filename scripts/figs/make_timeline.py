@@ -52,7 +52,7 @@ def main() -> int:
     args = ap.parse_args()
     L = LABELS[args.lang]
 
-    fig, ax = plt.subplots(figsize=(8.9, 2.5))
+    fig, ax = plt.subplots(figsize=(6.0, 1.75))
     y0, h = 0.0, 1.0
     bands = [
         (0, T_INJ, "#c8e6c9", L["pre"]),
@@ -73,17 +73,15 @@ def main() -> int:
                     ha="center", va="bottom", fontsize=9.5, fontweight="bold",
                     color=color,
                     arrowprops=dict(arrowstyle="->", color=color, lw=1.2))
-        ax.text(t - 2.5, y0 + 0.07, f"t={t}s", ha="right", va="bottom",
-                fontsize=8.5, color=color)
 
     # anotação da janela de falta (abaixo do eixo, à esquerda do rótulo do eixo)
-    ax.annotate("", xy=(T_INJ, y0 - 0.2), xytext=(T_REM, y0 - 0.2),
+    ax.annotate("", xy=(T_INJ, y0 - 0.48), xytext=(T_REM, y0 - 0.48),
                 arrowprops=dict(arrowstyle="<->", color=RED, lw=1.0))
-    ax.text((T_INJ + T_REM) / 2, y0 - 0.27, L["window"], ha="center", va="top",
+    ax.text((T_INJ + T_REM) / 2, y0 - 0.55, L["window"], ha="center", va="top",
             fontsize=8.5, color=RED)
 
     ax.set_xlim(-2, T_END + 2)
-    ax.set_ylim(y0 - 0.75, y0 + h + 0.95)
+    ax.set_ylim(y0 - 0.95, y0 + h + 0.95)
     ax.set_xticks([0, T_INJ, T_REM, T_END])
     ax.set_yticks([])
     ax.text(225, y0 - 0.27, L["x"], ha="center", va="top", fontsize=9.5)

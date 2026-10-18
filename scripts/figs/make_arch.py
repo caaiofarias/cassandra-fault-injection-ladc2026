@@ -26,7 +26,7 @@ LABELS = {
         "client": "Cliente de carga",
         "client_sub": "YCSB 0.17.0 · e2-medium",
         "net": "rede interna (~0,3 ms)",
-        "cluster": "Cluster Cassandra 4.1 · RF = 3 · SimpleStrategy",
+        "cluster": "Cluster Cassandra 4.1 · 5 × e2-standard-2 · RF = 3",
         "node": "nó-{i}",
         "ring": "anel de tokens (256 vnodes/nó) · gossip",
         "foot": "Workload A · 100k registros · CL ∈ {ONE, QUORUM, ALL}",
@@ -36,7 +36,7 @@ LABELS = {
         "client": "Load client",
         "client_sub": "YCSB 0.17.0 · e2-medium",
         "net": "internal network (~0.3 ms)",
-        "cluster": "Cassandra 4.1 cluster · RF = 3 · SimpleStrategy",
+        "cluster": "Cassandra 4.1 cluster · 5 × e2-standard-2 · RF = 3",
         "node": "node-{i}",
         "ring": "token ring (256 vnodes/node) · gossip",
         "foot": "Workload A · 100k records · CL ∈ {ONE, QUORUM, ALL}",
@@ -49,7 +49,6 @@ LIGHT = "#eef2fb"
 LIGHTER = "#f7f9fe"
 BORDER = "#9db0d9"
 GREY = "#555555"
-IPS = ["10.128.0.2", "10.128.0.3", "10.128.0.4", "10.128.0.5", "10.128.0.6"]
 
 
 def box(ax, x, y, w, h, fc, ec, lw=1.0, r=0.03, ls="-"):
@@ -66,52 +65,48 @@ def main() -> int:
     args = ap.parse_args()
     L = LABELS[args.lang]
 
-    fig, ax = plt.subplots(figsize=(8.9, 4.7))
+    # compacta (camera-ready): legível a ~0,75 da largura do texto LNCS
+    fig, ax = plt.subplots(figsize=(5.6, 3.0))
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 5.3)
+    ax.set_ylim(0, 5.45)
     ax.axis("off")
 
     # caixa externa: GCP
-    box(ax, 0.2, 0.55, 9.6, 4.55, LIGHTER, BORDER, lw=1.2, r=0.15, ls="--")
-    ax.text(0.45, 4.85, L["gcp"], ha="left", va="center", fontsize=10.5,
+    box(ax, 0.2, 0.55, 9.6, 4.8, LIGHTER, BORDER, lw=1.2, r=0.15, ls="--")
+    ax.text(0.45, 5.0, L["gcp"], ha="left", va="center", fontsize=9.5,
             fontweight="bold", color=NAVY)
 
     # cliente de carga
-    cx, cy, cw, ch = 3.3, 3.85, 3.4, 0.8
+    cx, cy, cw, ch = 2.8, 3.75, 4.4, 0.8
     box(ax, cx, cy, cw, ch, NAVY, NAVY, r=0.1)
     ax.text(cx + cw / 2, cy + ch * 0.66, L["client"], ha="center", va="center",
-            fontsize=10.5, fontweight="bold", color="white")
+            fontsize=9.5, fontweight="bold", color="white")
     ax.text(cx + cw / 2, cy + ch * 0.27, L["client_sub"], ha="center", va="center",
-            fontsize=9, color="#dfe6f7")
+            fontsize=8.5, color="#dfe6f7")
 
     # seta bidirecional cliente <-> cluster, com rótulo da rede
     ax.annotate("", xy=(5.0, 3.1), xytext=(5.0, cy),
                 arrowprops=dict(arrowstyle="<->", color=BLUE, lw=1.6))
-    box(ax, 3.95, 3.3, 2.1, 0.32, "white", BORDER, r=0.06)
-    ax.text(5.0, 3.46, L["net"], ha="center", va="center", fontsize=8.5,
+    ax.text(5.15, 3.42, L["net"], ha="left", va="center", fontsize=8.5,
             fontweight="bold", color=NAVY)
 
     # cluster
     kx, ky, kw, kh = 0.5, 0.85, 9.0, 2.25
     box(ax, kx, ky, kw, kh, LIGHT, BORDER, lw=1.2, r=0.12)
     ax.text(kx + 0.25, ky + kh - 0.25, L["cluster"], ha="left", va="center",
-            fontsize=10, fontweight="bold", color=NAVY)
+            fontsize=9, fontweight="bold", color=NAVY)
 
     # nós
     n = 5
-    nw, nh, gap = 1.3, 1.0, (kw - 0.6 - n * 1.3) / (n - 1)
-    ny = ky + 0.7
+    nw, nh, gap = 1.3, 0.75, (kw - 0.6 - n * 1.3) / (n - 1)
+    ny = ky + 0.8
     xs = []
     for i in range(n):
         nx = kx + 0.3 + i * (nw + gap)
         xs.append(nx + nw / 2)
         box(ax, nx, ny, nw, nh, "white", BORDER, lw=1.0, r=0.08)
-        ax.text(nx + nw / 2, ny + nh * 0.74, L["node"].format(i=i + 1),
-                ha="center", va="center", fontsize=10, fontweight="bold", color=NAVY)
-        ax.text(nx + nw / 2, ny + nh * 0.46, "e2-standard-2", ha="center",
-                va="center", fontsize=8.2, color=GREY)
-        ax.text(nx + nw / 2, ny + nh * 0.2, IPS[i], ha="center", va="center",
-                fontsize=8.2, fontweight="bold", color=BLUE)
+        ax.text(nx + nw / 2, ny + nh / 2, L["node"].format(i=i + 1),
+                ha="center", va="center", fontsize=9.5, fontweight="bold", color=NAVY)
 
     # anel de tokens: linha ligando os nós, com pontos
     ry = ny - 0.22
@@ -120,10 +115,10 @@ def main() -> int:
         ax.plot([x, x], [ny, ry], color=BLUE, lw=0.9, zorder=1)
         ax.plot(x, ry, "o", ms=4.5, color=BLUE, zorder=2)
     ax.text((xs[0] + xs[-1]) / 2, ry - 0.2, L["ring"], ha="center", va="center",
-            fontsize=8.5, style="italic", color=GREY)
+            fontsize=8, style="italic", color=GREY)
 
     # rodapé
-    ax.text(5.0, 0.25, L["foot"], ha="center", va="center", fontsize=9, color=GREY)
+    ax.text(5.0, 0.25, L["foot"], ha="center", va="center", fontsize=8.5, color=GREY)
 
     out = Path(args.out)
     fig.savefig(out, bbox_inches="tight")

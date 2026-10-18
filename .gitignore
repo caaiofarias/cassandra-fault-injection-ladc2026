@@ -3,3 +3,7 @@ __pycache__/
 *.pdf
 *.png
 .DS_Store
+
+# PDFs do artigo e das figuras que ele usa
+!paper/*.pdf
+!paper/figs/*.pdf
