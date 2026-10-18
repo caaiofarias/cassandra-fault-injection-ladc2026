@@ -7,3 +7,6 @@ __pycache__/
 # PDFs do artigo e das figuras que ele usa
 !paper/*.pdf
 !paper/figs/*.pdf
+
+# material interno de estudo (não publicar)
+/internal/
